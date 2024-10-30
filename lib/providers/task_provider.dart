@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/repository/supabase_repository.dart';
 
@@ -33,4 +34,15 @@ class TaskProvider with ChangeNotifier {
       print(e);
     }
   }
+
+  Future<void> deleteTask(String id) async {
+    try {
+      await _repo.deleteTask(id);
+      _tasks.removeWhere((task) => task.id == id);
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
+  }
+
 }
